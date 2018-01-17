@@ -1,15 +1,5 @@
 'use strict';
 
-const charIndexes = function returnArrayOfGivenCharIndexesWithinString(char, str) {
-  const regex = new RegExp(char, 'g');
-  const indexes = [];
-  let regexMatch;
-  while ((regexMatch = regex.exec(str)) !== null) {
-    indexes.push(regexMatch.index);
-  }
-  return indexes;
-};
-
 /**
  * Spaces are not excluded so that people counting through the index positions
  * won't 'Wtf?' at the missing indexes.
@@ -17,8 +7,10 @@ const charIndexes = function returnArrayOfGivenCharIndexesWithinString(char, str
 const indexLetters = function returnObjOfEachCharPositionsInString(str) {
   const charSet = new Set(str);
   const charCounts = {};
-  for (const char of charSet) {
-    charCounts[char] = charIndexes(char, str);
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+    if (charCounts[char] === undefined) { charCounts[char] = []; }
+    charCounts[char].push(i);
   }
   return charCounts;
 };
